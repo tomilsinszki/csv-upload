@@ -76,29 +76,28 @@ class UploadController extends Controller
         $sampleRows = array();
 
         $rowNumber = 0;
+        $columnCount = 0;
         if (($handle = fopen($filePath, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
-                if (3 <= $rowNumber) {
+                if (4 <= $rowNumber) {
                     break;
+                }
+
+                if ($columnCount < count($data)) {
+                    $columnCount = count($data);
                 }
 
                 $sampleRows[] = $data;
 
-
-                /*
-                $num = count($data);
-                echo "<p> $num fields in line $rowNumber: <br /></p>\n";
-                for ($c=0; $c < $num; $c++) {
-                    echo $data[$c] . "<br />\n";
-                }
-                */
-
                 $rowNumber++;
             }
+
             fclose($handle);
         }
 
-        print_r($sampleRows);
-        exit();
+        return view('processFile', array(
+            'sampleRows' => $sampleRows,
+            'columnCount' => $columnCount,
+        ));
     }
 }
