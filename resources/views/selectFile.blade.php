@@ -31,15 +31,13 @@
 
         $(document).ready(function() {
             $('#csvUploadForm').submit(function () {
-                console.log('upload form submitted');
-
                 let files = $('#formFile')[0].files;
 
                 if (0 < files.length) {
-                    let fd = new FormData();
+                    let formData = new FormData();
 
-                    fd.append('file',files[0]);
-                    fd.append('_token',CSRF_TOKEN);
+                    formData.append('file',files[0]);
+                    formData.append('_token',CSRF_TOKEN);
 
                     // TODO: add
                     $('#responseMsg').addClass('d-none');
@@ -47,7 +45,7 @@
                     $.ajax({
                         url: "{{ route('uploadFile') }}",
                         method: 'post',
-                        data: fd,
+                        data: formData,
                         contentType: false,
                         processData: false,
                         dataType: 'json',
