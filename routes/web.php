@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*
 Route::get('/', function () {
     return view('welcome');
 });
+*/
 
-Route::get('/select-file', function () {
-    return view('selectFile');
-});
+Route::get('/select-file', [UploadController::class, 'selectFile']);
+Route::post('/upload-file', [UploadController::class, 'uploadFile'])->name('uploadFile');
