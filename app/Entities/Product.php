@@ -20,6 +20,11 @@ class Product
     private $id;
 
     /**
+     * @ORM\OneToMany(targetEntity="ProductCustomField", mappedBy="product", cascade={"delete"})
+     */
+    private $customFields;
+
+    /**
      * @ORM\Column(type="string", length=511, nullable=true)
      */
     private $brandName;

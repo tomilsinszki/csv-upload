@@ -20,6 +20,12 @@ class ProductCustomField
     private $id;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="customFields")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false)
+     */
+    private $product;
+
+    /**
      * @ORM\Column(type="string", length=511, nullable=true, unique=true)
      */
     private $name;
