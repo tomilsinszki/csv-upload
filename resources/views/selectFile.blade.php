@@ -12,12 +12,6 @@
             <div class="alert d-none" id="responseMsg"></div>
 
             <div>
-                {{--
-                <label for="formFileLg" class="form-label">Upload a csv file</label>
-                <input class="form-control form-control-lg" id="formFileLg" type="file">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                --}}
-
                 <form id="csvUploadForm">
                     <div class="form-row row align-items-center">
                         <div class="col-auto my-1">
