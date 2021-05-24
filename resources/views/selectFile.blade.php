@@ -51,8 +51,7 @@
                     $('#responseMsg').addClass('d-none');
 
                     $.ajax({
-                        // TODO: fix url
-                        url: "/upload-file",
+                        url: "{{ route('uploadFile') }}",
                         method: 'post',
                         data: fd,
                         contentType: false,
