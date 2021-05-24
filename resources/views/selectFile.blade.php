@@ -40,7 +40,7 @@
 
                     formData.append('file',files[0]);
                     formData.append('_token',CSRF_TOKEN);
-                    
+
                     $('#responseMessage').addClass('d-none');
 
                     $.ajax({

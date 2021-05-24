@@ -35,16 +35,15 @@ class UploadController extends Controller
         ]);
 
         if ($validator->fails()) {
-            // TODO: implement
             $data['success'] = 0;
             $data['error'] = $validator->errors()->first('file');
         } else {
             if($request->file('file')) {
                 $file = $request->file('file');
-                $filename = time().'_'.$file->getClientOriginalName();
                 $extension = $file->getClientOriginalExtension();
+                $filename = time() . '_' . uniqid() . '.' . $extension;
                 $location = 'files';
-                $file->move($location,$filename);
+                $file->move($location, $filename);
                 $filepath = url('files/'.$filename);
 
                 $data['success'] = 1;
