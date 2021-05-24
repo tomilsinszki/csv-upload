@@ -20,7 +20,7 @@ class Product
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="ProductCustomField", mappedBy="product", cascade={"delete"})
+     * @ORM\OneToMany(targetEntity="ProductCustomField", mappedBy="product", cascade={"remove"})
      */
     private $customFields;
 
