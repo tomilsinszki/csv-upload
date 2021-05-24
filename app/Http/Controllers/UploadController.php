@@ -73,21 +73,32 @@ class UploadController extends Controller
         $publicFolderPath = public_path();
         $filePath = "$publicFolderPath/files/$fileName.csv";
 
-        //var_dump($filePath);exit();
+        $sampleRows = array();
 
-        $fileContents = file_get_contents($filePath, false, null);
+        $rowNumber = 0;
+        if (($handle = fopen($filePath, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
+                if (3 <= $rowNumber) {
+                    break;
+                }
 
-        
-
-        var_dump('hello');exit();
-
-        //var_dump($fileContents);exit();
+                $sampleRows[] = $data;
 
 
-        //$fileContents = file_get_contents($filePath);
-        /*
-        var_dump($fileContents);
+                /*
+                $num = count($data);
+                echo "<p> $num fields in line $rowNumber: <br /></p>\n";
+                for ($c=0; $c < $num; $c++) {
+                    echo $data[$c] . "<br />\n";
+                }
+                */
+
+                $rowNumber++;
+            }
+            fclose($handle);
+        }
+
+        print_r($sampleRows);
         exit();
-        */
     }
 }
