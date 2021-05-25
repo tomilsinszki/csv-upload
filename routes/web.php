@@ -22,4 +22,5 @@ Route::get('/', function () {
 
 Route::get('/select-file', [UploadController::class, 'selectFile']);
 Route::post('/upload-file', [UploadController::class, 'uploadFile'])->name('uploadFile');
-Route::get('/process-file', [UploadController::class, 'processFile'])->name('processFile');
+Route::get('/map-file', [UploadController::class, 'mapFile'])->name('mapFile');
+Route::post('/process-file', [UploadController::class, 'processFile'])->name('processFile');
