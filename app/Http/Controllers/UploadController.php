@@ -41,14 +41,14 @@ class UploadController extends Controller
             if($request->file('file')) {
                 $file = $request->file('file');
                 $extension = $file->getClientOriginalExtension();
-                $filename = time() . '_' . uniqid() . '.' . $extension;
+                $fileName = time() . '_' . uniqid() . '.' . $extension;
                 $location = 'files';
-                $file->move($location, $filename);
-                $filepath = url('files/'.$filename);
+                $file->move($location, $fileName);
+                $filePath = url("files/$fileName");
 
                 $data['success'] = 1;
                 $data['message'] = 'Uploaded Successfully!';
-                $data['filepath'] = $filepath;
+                $data['filepath'] = $filePath;
                 $data['extension'] = $extension;
             } else {
                 $data['success'] = 2;
@@ -57,5 +57,88 @@ class UploadController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function mapFile(Request $request)
+    {
+        $fileName = $request->file ?? null;
+
+        if (empty($fileName)) {
+            // TODO: show error message
+            exit();
+        }
+
+        $publicFolderPath = public_path();
+        $filePath = "$publicFolderPath/files/$fileName.csv";
+
+        $sampleRows = array();
+
+        $rowNumber = 0;
+        $columnCount = 0;
+        if (($handle = fopen($filePath, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
+                if (4 <= $rowNumber) {
+                    break;
+                }
+
+                if ($columnCount < count($data)) {
+                    $columnCount = count($data);
+                }
+
+                $sampleRows[] = $data;
+
+                $rowNumber++;
+            }
+
+            fclose($handle);
+        }
+
+        return view('mapFile', array(
+            'sampleRows' => $sampleRows,
+            'columnCount' => $columnCount,
+            'fileName' => $fileName,
+        ));
+    }
+
+    public function processFile(Request $request)
+    {
+        $data = $request->all();
+        $fileName = $data['file_name'] ?? null;
+        print_r($data);
+        exit();
+
+        //$fileName = $request->file ?? null;
+
+        if (empty($fileName)) {
+            // TODO: show error message
+            exit();
+        }
+
+        $publicFolderPath = public_path();
+        $filePath = "$publicFolderPath/files/$fileName.csv";
+
+        /*
+        $sampleRows = array();
+
+        $rowNumber = 0;
+        $columnCount = 0;
+        if (($handle = fopen($filePath, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
+                if (4 <= $rowNumber) {
+                    break;
+                }
+
+                if ($columnCount < count($data)) {
+                    $columnCount = count($data);
+                }
+
+                $sampleRows[] = $data;
+
+                $rowNumber++;
+            }
+
+            fclose($handle);
+        }
+        */
     }
 }
