@@ -59,7 +59,7 @@ class UploadController extends Controller
         return response()->json($data);
     }
 
-    public function processFile(Request $request)
+    public function mapFile(Request $request)
     {
         $fileName = $request->file ?? null;
 
@@ -93,9 +93,52 @@ class UploadController extends Controller
             fclose($handle);
         }
 
-        return view('processFile', array(
+        return view('mapFile', array(
             'sampleRows' => $sampleRows,
             'columnCount' => $columnCount,
+            'fileName' => $fileName,
         ));
+    }
+
+    public function processFile(Request $request)
+    {
+        $data = $request->all();
+        $fileName = $data['file_name'] ?? null;
+        print_r($data);
+        exit();
+
+        //$fileName = $request->file ?? null;
+
+        if (empty($fileName)) {
+            // TODO: show error message
+            exit();
+        }
+
+        $publicFolderPath = public_path();
+        $filePath = "$publicFolderPath/files/$fileName.csv";
+
+        /*
+        $sampleRows = array();
+
+        $rowNumber = 0;
+        $columnCount = 0;
+        if (($handle = fopen($filePath, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
+                if (4 <= $rowNumber) {
+                    break;
+                }
+
+                if ($columnCount < count($data)) {
+                    $columnCount = count($data);
+                }
+
+                $sampleRows[] = $data;
+
+                $rowNumber++;
+            }
+
+            fclose($handle);
+        }
+        */
     }
 }
