@@ -8,20 +8,16 @@
 @section('content')
     <div class="px-4 py-5 my-5 text-center">
         @for ($columnIndex = 0; $columnIndex < $columnCount; $columnIndex++)
-            <div class="card">
+            <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title text-primary">{{ $sampleRows[0][$columnIndex] }}</h5>
-                    <p class="card-text">
+                    <div class="card-text">
+                        @for ($i = 1; $i < 4; $i++)
                         <p class="text-secondary mb-3">
-                            {{ $sampleRows[1][$columnIndex] }}
+                            {{ $sampleRows[$i][$columnIndex] }}
                         </p>
-                        <p class="text-secondary mb-3">
-                            {{ $sampleRows[2][$columnIndex] }}
-                        </p>
-                        <p class="text-secondary mb-3">
-                            {{ $sampleRows[3][$columnIndex] }}
-                        </p>
-                    </p>
+                        @endfor
+                    </div>
                 </div>
             </div>
         @endfor

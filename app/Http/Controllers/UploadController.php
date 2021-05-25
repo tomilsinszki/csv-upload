@@ -61,8 +61,6 @@ class UploadController extends Controller
 
     public function processFile(Request $request)
     {
-        //echo public_path();exit();
-
         $fileName = $request->file ?? null;
 
         if (empty($fileName)) {
